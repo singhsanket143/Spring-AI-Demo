@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dtos.MovieRecommendation;
 
-import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/chat")
