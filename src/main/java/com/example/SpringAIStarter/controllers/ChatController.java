@@ -4,12 +4,15 @@ import java.util.List;
 
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dtos.MovieRecommendation;
+
+import reactor.core.publisher.Flux;
 
 
 @RestController
@@ -30,6 +33,11 @@ public class ChatController {
             .call()
             .content();
         return response;
+    }
+
+    @GetMapping(value = "/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public Flux<String> streamChat(@RequestParam String message) {
+        return chatClient.prompt().user(message).stream().content();
     }
 
     @GetMapping("/movies")
